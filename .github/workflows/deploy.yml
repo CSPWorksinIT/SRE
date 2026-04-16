@@ -1,4 +1,4 @@
-name: Test Pipeline
+name: CI-CD
 
 on:
   push:
@@ -7,9 +7,18 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  build-push:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Say hello
-        run: echo "CI/CD is working 🚀"
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKER_USER }}/flask:${{ github.sha }} .
+
+      - name: Login DockerHub
+        run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u ${{ secrets.DOCKER_USER }} --password-stdin
+
+      - name: Push image
+        run: docker push ${{ secrets.DOCKER_USER }}/flask:${{ github.sha }}
