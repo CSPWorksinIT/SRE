@@ -11,5 +11,5 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Print message
+      - name: Say hello
         run: echo "CI/CD is working 🚀"
