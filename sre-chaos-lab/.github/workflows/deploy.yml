@@ -13,10 +13,12 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Build Docker image
-      run: docker build -t ${{ secrets.DOCKER_USER }}/flask:${{ github.sha }} .
+      run: docker build -t ${{ secrets.DOCKER_USER }}/sre-app:${{ github.sha }} -t ${{ secrets.DOCKER_USER }}/sre-app:latest .
 
     - name: Login to Docker Hub
       run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u ${{ secrets.DOCKER_USER }} --password-stdin
 
     - name: Push image
-      run: docker push ${{ secrets.DOCKER_USER }}/flask:${{ github.sha }}
+      run: |
+        docker push ${{ secrets.DOCKER_USER }}/sre-app:${{ github.sha }}
+        docker push ${{ secrets.DOCKER_USER }}/sre-app:latest

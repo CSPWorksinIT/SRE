@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
       - name: sre-app
-        image: sre-app
-        imagePullPolicy: IfNotPresent
+        image: sre-app:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 5000
 
