@@ -22,3 +22,8 @@ jobs:
 
       - name: Push image
         run: docker push ${{ secrets.DOCKER_USER }}/sre-app:${{ github.sha }}
+      - name: Tag latest
+        run: docker tag ${{ secrets.DOCKER_USER }}/sre-app:${{ github.sha }} ${{ secrets.DOCKER_USER }}/sre-app:latest
+
+      - name: Push latest
+        run: docker push ${{ secrets.DOCKER_USER }}/sre-app:latest
