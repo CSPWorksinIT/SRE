@@ -13,30 +13,12 @@ spec:
         app: sre-app
     spec:
       containers:
-      - name: sre-app
-        image: sre-app:latest
-        imagePullPolicy: Always
+      - name: spro
+        image: cspallapu/sre-app:v1.0.1
         ports:
         - containerPort: 5000
-
-        readinessProbe:
-          httpGet:
-            path: /health
-            port: 5000
-          initialDelaySeconds: 5
-          periodSeconds: 5
-
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 5000
-          initialDelaySeconds: 10
-          periodSeconds: 10
-
-        resources:
-          requests:
-            cpu: "100m"
-            memory: "128Mi"
-          limits:
-            cpu: "200m"
-            memory: "256Mi"
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxUnavailable: 1
+        maxSurge: 1
